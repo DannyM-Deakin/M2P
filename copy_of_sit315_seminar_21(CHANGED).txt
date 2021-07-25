@@ -1,0 +1,48 @@
+
+//Global constants
+const uint8_t BTN_PIN = 2;
+const uint8_t LED_PIN = 13;
+
+//Global variables
+uint8_t buttonPrevState = LOW;
+uint8_t ledState = LOW;
+
+//Setup function
+void setup()
+{
+  //Set Button input
+  pinMode(BTN_PIN, INPUT_PULLUP);
+  //Set LED output
+  pinMode(LED_PIN, OUTPUT);
+  //Set serial
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  //Set button state
+  uint8_t buttonState = digitalRead(BTN_PIN);
+  
+  //Print button state, led state
+  if(buttonState == 0)
+  {
+    Serial.println("Button not pressed");
+  }
+  if(buttonState == 1)
+  {
+    Serial.println("Button pressed");
+    Serial.println("LED ON");  
+  }
+  
+  //Check if button is pressed if so change led state
+  if(buttonState != buttonPrevState)
+  {
+    ledState = !ledState;
+    digitalWrite(LED_PIN, ledState);
+  }
+  
+  buttonPrevState = buttonState;
+    
+  //Add delay to help simulation
+  delay(500);
+}
